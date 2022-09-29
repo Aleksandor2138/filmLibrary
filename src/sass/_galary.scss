@@ -4,9 +4,11 @@
 
 
   
-.galary-list {
+.galary-list,
+.galary-list-library {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
  
     
   }
@@ -24,8 +26,8 @@
 
   .galary-list-item-img {
     display: block;
-    width: 320px;
-    height: 574px;
+    width: 280px;
+    height: auto;
     margin-bottom: 12px;
     border-radius: 5px;
     &:hover,

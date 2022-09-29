@@ -1,10 +1,18 @@
-const pathImage = "https://image.tmdb.org/t/p/";
-import imageDefaults from '../images/default.jpg'
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
-export function createMarkupElement({id, title, poster_path, genre_str, release_date, vote_average}) {
-  
-  return `<li class="galary-list__item" data-movie-id = ${id}>
-              <a data-modal-open href="" class="galary-list-link-wrapper" data-movie-id = ${id}>
+import imageDefaults from '../images/default.jpg'
+import getRefs from '../get-refs';
+
+const pathImage = "https://image.tmdb.org/t/p/";
+
+const refs = getRefs();
+
+
+export default function  renderMarkupImageInfo (galleryItems) {
+  const renderGallary =  galleryItems.results.map(({id, title, poster_path, genre_str, release_date, vote_average}) => {
+    return `
+          <li class="galary-list__item" data-movie-id = ${id}>
                 <div class="galary-list-item-wraper">
                     <img
                       src=${!poster_path ? imageDefaults: `${pathImage}original${poster_path}`}
@@ -22,8 +30,22 @@ export function createMarkupElement({id, title, poster_path, genre_str, release_
                       <p class="film-rating">${vote_average}</p>
                     </div>
                   </div>
-                </div>
-              </a>
-            </li>`
+                </div> 
+            </li>
+    `;
+  }).join("");
+
+  refs.imagesContainer.insertAdjacentHTML('beforeend', renderGallary);
+  gallery.refresh();
 }
 
+
+
+const gallery = new SimpleLightbox(".galary-list a", {
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+  showCounter: false,
+  nextOnImageClick: true,
+  scrollZoom: false,
+});

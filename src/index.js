@@ -9,6 +9,7 @@ import openMovieDetails from './js/movie-details-open';
 import { createMarkupElement } from './js/renderMarkup';
 import MoviesApi from './js/moviesApi';
 import './js/top.js';
+import onSearch from './js/onSearch';
 
 // // кнопка top
 // export const scroll = new OnlyScroll(document.scrollingElement, {
@@ -43,3 +44,6 @@ async function fetchTrendMovies () {
     console.log(error);
   }
 }
+
+refs.searchBtn.addEventListener('click', onSearch);
+

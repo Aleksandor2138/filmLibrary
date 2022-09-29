@@ -8,7 +8,8 @@ function footerModal() {
 
   refs.footerModalOpen.addEventListener('click', footerMO);
   refs.footerModalClose.addEventListener('click', footerMC);
-  refs.backdrop.addEventListener('click', footerMC);
+  refs.backdrop.addEventListener('click', onBackdropClick);
+  // refs.backdrop.addEventListener('click', onBackdropClick);
 
   document.addEventListener('keypress', function (e) {
     console.log(e.code);
@@ -20,14 +21,13 @@ function footerModal() {
   function footerMO(evt) {
     evt.preventDefault();
 
-    console.log('kurva open');
+    console.log('open modal footer');
     window.addEventListener('keydown', onEscKeyPress);
     refs.modal.classList.remove('is-hidden');
   }
 
   function footerMC(evt) {
     evt.preventDefault();
-    console.log('closed');
     refs.modal.classList.add('is-hidden');
   }
 
@@ -38,12 +38,13 @@ function footerModal() {
       footerMC(event);
     }
   }
-}
-// достукатись до хреста
-//     відкрити по анкору
 
-//     закрити по хресту
-//     закрити по еск
-//     закрити по бекдропу
+  function onBackdropClick(event) {
+    if (event.currentTarget === event.target) {
+      refs.modal.classList.add('is-hidden');
+      footerMC();
+    }
+  }
+}
 
 export default footerModal;

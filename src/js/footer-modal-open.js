@@ -9,7 +9,6 @@ function footerModal() {
   refs.footerModalOpen.addEventListener('click', footerMO);
   refs.footerModalClose.addEventListener('click', footerMC);
   refs.backdrop.addEventListener('click', onBackdropClick);
-  // refs.backdrop.addEventListener('click', onBackdropClick);
 
   document.addEventListener('keypress', function (e) {
     console.log(e.code);

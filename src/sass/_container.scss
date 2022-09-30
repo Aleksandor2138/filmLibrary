@@ -1,7 +1,7 @@
 .container,
-.container-dev{
+.container-dev {
   margin: 0 auto;
-  
+
 }
 
 
@@ -28,23 +28,23 @@
 // 768+
 @media screen and (min-width: 768px) {
 
-.section.header,
- .section{
-  padding-top: 0;
-  padding-bottom: 0;
-}
+  .section.header,
+  .section {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 
   .container {
     max-width: 768px;
     // outline: 2px solid tomato;
-  
+
   }
 
-.container-dev {
-  display: block;
-  width: 549px;
-  // outline: 2px solid tomato;
-}
+  .container-dev {
+    display: block;
+    width: 549px;
+    // outline: 2px solid tomato;
+  }
 
 
 }
@@ -60,24 +60,31 @@
   }
 
   .container-dev {
-    display: block;
-    width: 833px;
-    // outline: 2px solid tomato;
+    // display: block;
+    // width: 833px;
+    // margin-left: auto;
+    // margin-right: auto;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    display: flex;
   }
 
 
 }
 
 
-@media screen and (min-width: 1200px){
-   
+@media screen and (min-width: 1200px) {
+
   .container-dev {
-    display: block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    display: flex;
     width: 833px;
     // outline: 2px solid tomato;
   }
 }
-
-
-
-

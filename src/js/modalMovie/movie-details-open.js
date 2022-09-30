@@ -3,7 +3,7 @@ import renderMovieDetails from './movie-details-render';
 import playTrailer from './movie-play-trailer';
 import addToWatchOrQueue from './add-to-watch-queue'; // FT-18, FT-19 (Функціонал для кнопок "Додати до переглянутих", "Додати до черги")
 
-export default async function openMovieDetails(movieId) {
+export default async function openMovieDetails(movieDetails) {
   const backdrop = document.querySelector('.backdrop');
   backdrop.classList.remove('is-hidden');
   const modalContent = document.querySelector('.modal-content');

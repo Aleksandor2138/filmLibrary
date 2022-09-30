@@ -3,7 +3,7 @@
 import getRefs from './js/get-refs';
 // import renderMarkupImageInfo from './renderMarkup';
 import createPagination from './js/pagination';
-import openMovieDetails from './js/movie-details-open';
+import openMovieDetails from './js/modalMovie';
 import footerModal from './js/footer-modal-open';
 
 import { createMarkupElement } from './js/renderMarkup';
@@ -28,7 +28,7 @@ function onMovieCardClick(e) {
   if (e.target.classList.contains('galary-list-item-img')) {
     e.preventDefault();
     const movieId = e.target.dataset.movieId;
-    openMovieDetails(movieId);
+    openMovieDetails(moviesApi.fetchMovieByID(movieId, true));
   }
 }
 footerModal();

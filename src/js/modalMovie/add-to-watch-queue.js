@@ -1,13 +1,15 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import getRefs from '../get-refs';
+
+const refs = getRefs();
 
 export default function addToWatchOrQueue(movieDetails) {
-  const { data } = movieDetails;
-  const { id, title, poster_path, genres, release_date, vote_average } = data;
+  const { id, title, poster_path, genres, release_date, vote_average } = movieDetails;
 
-  const addWatchBtn = document.querySelector('.add-watch-js');
-  const removeWatchBtn = document.querySelector('.remove-watch-js');
-  const addQueueBtn = document.querySelector('.add-queue-js');
-  const removeQueueBtn = document.querySelector('.remove-queue-js');
+  const addWatchBtn = refs.modalContent.querySelector('.add-watch-js');
+  const removeWatchBtn = refs.modalContent.querySelector('.remove-watch-js');
+  const addQueueBtn = refs.modalContent.querySelector('.add-queue-js');
+  const removeQueueBtn = refs.modalContent.querySelector('.remove-queue-js');
 
   let watched = localStorage.getItem('Watched');
   let queue = localStorage.getItem('Queue');

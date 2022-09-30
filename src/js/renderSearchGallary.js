@@ -1,5 +1,5 @@
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+// import SimpleLightbox from "simplelightbox";
+// import "simplelightbox/dist/simple-lightbox.min.css";
 
 import imageDefaults from '../images/default.jpg'
 import getRefs from './get-refs';
@@ -41,11 +41,11 @@ export default function  renderMarkupImageInfo (galleryItems) {
 
 
 
-const gallery = new SimpleLightbox(".galary-list a", {
-  captionsData: 'alt',
-  captionDelay: 250,
-  captionPosition: 'bottom',
-  showCounter: false,
-  nextOnImageClick: true,
-  scrollZoom: false,
-});
+// const gallery = new SimpleLightbox(".galary-list a", {
+//   captionsData: 'alt',
+//   captionDelay: 250,
+//   captionPosition: 'bottom',
+//   showCounter: false,
+//   nextOnImageClick: true,
+//   scrollZoom: false,
+// });

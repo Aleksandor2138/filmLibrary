@@ -3,6 +3,7 @@ import 'notiflix/dist/notiflix-3.2.5.min.css';
 import axios from 'axios';
 import getRefs from './get-refs';
 import renderMarkupImageInfo from '../js/renderSearchGallary';
+import { createMarkupElement } from './renderMarkup';
 
 
 const refs = getRefs();
@@ -41,19 +42,24 @@ export default  async function  onSearch (e) {
     totalPageOfResponse = Math.floor(totalFilmsOfResponse / perPage);
 
   
-    
-    if (URL.data.results.length > 0) {
-        Notiflix.Notify.success (
-          ` We found ${totalFilmsOfResponse} images.`, {
-            timeout: 2000,}
-        )
-        }
+    console.log(URL.data);
+
+    // const {results} = URL.data;
+    // if (URL.data.results.length > 0) {
+    //     Notiflix.Notify.success (
+    //       ` We found ${totalFilmsOfResponse} images.`, {
+    //         timeout: 2000,}
+    //     )
+    //     }
         
 
         refs.imagesContainer.innerHTML = '';
-        renderMarkupImageInfo(URL.data);
-        page += 1;
-      } catch (error) {
+        refs.imagesContainer.insertAdjacentHTML(
+          'afterbegin',
+          URL.data.results.map(createMarkupElement).join('')
+        );
+        // page += 1;
+    } catch (error) {
         console.log(error);
       }
     }
@@ -66,13 +72,16 @@ export default  async function  onSearch (e) {
       const searchQuery = refs.searchInput.value;
       try {
         const URL = await axios.get(
-          `${BASE_URL}?api_key=${API_KEY}&query=${searchQuery}&per_page=12&page=${page}`
+          `${BASE_URL}?api_key=${API_KEY}&query=${searchQuery}&page=${page}`
         );
         if (URL.data.results.length === 0 || totalPageOfResponse === page) {
           Notiflix.Notify.warning("We're sorry, but this is the last page.");
         }
         console.log(page);
-        renderMarkupImageInfo(URL.data);
+        // renderMarkupImageInfo(URL.data);
+        refs.imagesContainer.insertAdjacentHTML(
+          'afterbegin',
+          URL.data.results.map(createMarkupElement).join(''));
       } catch (error) {
         console.log(error);
       }

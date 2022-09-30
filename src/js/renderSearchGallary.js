@@ -2,7 +2,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 import imageDefaults from '../images/default.jpg'
-import getRefs from '../get-refs';
+import getRefs from './get-refs';
 
 const pathImage = "https://image.tmdb.org/t/p/";
 

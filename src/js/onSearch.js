@@ -1,7 +1,7 @@
 import Notiflix from 'notiflix';
 import 'notiflix/dist/notiflix-3.2.5.min.css';
 import axios from 'axios';
-import getRefs from '../get-refs';
+import getRefs from './get-refs';
 import renderMarkupImageInfo from '../js/renderSearchGallary';
 
 
@@ -21,12 +21,7 @@ let totalPageOfResponse;
 let page = 1;
 
 
-refs.searchForm.addEventListener('submit', onSearch );
 
-// ======Бесконечный скролл======
-
-
-window.addEventListener('scroll', addMore);
 
 // ==============================
 
@@ -65,8 +60,6 @@ export default  async function  onSearch (e) {
 
 
 //  fetchImages() 
-
-
 
 
     async function fetchImages() {

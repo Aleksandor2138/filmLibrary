@@ -2,7 +2,7 @@ import getRefs from '../get-refs';
 
 const refs = getRefs();
 
-export default async function playTrailer({trailer, site}) {
+export default function playTrailer({key: trailer, site}) {
   const playTrailerBtnMarkup = `<button class="button-modal play-trailer" type="button">
                                 Watch trailer
                             </button>`;
@@ -17,35 +17,34 @@ export default async function playTrailer({trailer, site}) {
   playTrailerBtn.addEventListener('click', onPlayTrailerClick);
 
   function onPlayTrailerClick(e) {
-    // const iframe = ;
+    const iframe = `<iframe class="player" id="player" type="text/html" width="${playerWidth}" height="${playerHeight}"
+                      src="http://www.youtube.com/embed/${trailer}?enablejsapi=1"
+                      frameborder="0">
+                    </iframe>`;
     //const playerContainer = document.querySelector('.player');
     //playerContainer.insertAdjacentHTML('beforeend', iframe);
-    refs.player.insertAdjacentElement('beforeend', `<iframe class="player" id="player" type="text/html" width="${playerWidth}" height="${playerHeight}"
-                          src="http://www.youtube.com/embed/${trailer}?enablejsapi=1"
-                      frameborder="0"></iframe>`);
+    refs.player.insertAdjacentHTML('beforeend', iframe);
     
     // const playerBackdrop = document.querySelector('.player-backdrop');
     // playerBackdrop.classList.remove('is-hidden');
-    refs.playerBackdrop.classList.remove(is-hidden);
-  
+    refs.playerBackdrop.classList.remove('is-hidden');
+    
     refs.playerBackdrop.addEventListener('click', onPlayerBackdropClick);
+    function onPlayerBackdropClick(e) {
+      if (e.target === refs.playerBackdrop) {
+        refs.playerBackdrop.classList.add('is-hidden');
+        refs.player.innerHTML = '';
+      }
+    }
   }
   
   window.addEventListener('keydown', onEscPress);
 
   function onEscPress(e) {
     if (e.code === 'Escape') {
-      playerBackdrop.classList.add('is-hidden');
-      playerContainer.innerHTML = '';
+      refs.playerBackdrop.classList.add('is-hidden');
+      refs.player.innerHTML = '';
       document.removeEventListener('keydown', onEscPress);
     }
   }
 }
-
-function onPlayerBackdropClick(e) {
-      console.log(e);
-      if (e.target === refs.playerBackdrop) {
-        refs.playerBackdrop.classList.add('is-hidden');
-        refs.player.innerHTML = '';
-      }
-    }

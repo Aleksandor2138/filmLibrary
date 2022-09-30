@@ -34,7 +34,7 @@ export default async function openMovieDetails(movieDetailsPromise) {
       if (e.target === refs.backdrop) {
         refs.modalContent.getElementById('first-btn').blur();
         refs.backdrop.classList.add('is-hidden');
-        modalContent.innerHTML = '';
+        refs.modalContent.innerHTML = '';
       }
     }
 
@@ -42,8 +42,8 @@ export default async function openMovieDetails(movieDetailsPromise) {
     function onEscPress(event) {
       if (event.code === 'Escape') {
         refs.modalContent.getElementById('first-btn').blur();
-        backdrop.classList.add('is-hidden');
-        modalContent.innerHTML = '';
+        refs.backdrop.classList.add('is-hidden');
+        refs.modalContent.innerHTML = '';
         document.removeEventListener('keydown', onEscPress);
       }
     }

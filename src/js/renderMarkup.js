@@ -1,7 +1,7 @@
 const pathImage = "https://image.tmdb.org/t/p/";
 import imageDefaults from '../images/default.jpg'
 
-export function createMarkupElement({id, title, poster_path, genre_str = [], release_date, vote_average}) {
+export function createMarkupElement({id, title, poster_path, genre_str , release_date, vote_average}) {
   
   return `<li class="galary-list__item" data-movie-id = ${id}>
               <a data-modal-open href="" class="galary-list-link-wrapper skeleton" data-movie-id = ${id}>

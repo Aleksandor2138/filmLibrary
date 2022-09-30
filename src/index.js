@@ -70,7 +70,44 @@ async function fetchTrendMovies() {
 }
 
 
-refs.searchForm.addEventListener('submit', onSearch );
+async function fetchQMovies(q) {
+  try {
+    moviesApi.query = q;
+    const { results, total_results, page } =
+      await moviesApi.fetchMovieQuery();
+
+    results.length &&
+      refs.imagesContainer.insertAdjacentHTML(
+        'afterbegin',
+        results.map(createMarkupElement).join('')
+      );
+
+    //  // pagination
+    const instance = createPagination();
+    instance.setItemsPerPage(20);
+    instance.setTotalItems(total_results);
+    instance.movePageTo(page);
+
+    instance.on('afterMove', event => {
+      const currentPage = event.page;
+      window.scrollTo({ top: 240, behavior: 'smooth' });
+    });
+
+    results.length &&
+      refs.imagesContainer.insertAdjacentHTML(
+        'afterbegin',
+        results.map(createMarkupElement).join('')
+      );
+
+    // Skeleton
+    makeSkeletonLoader();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// refs.searchForm.addEventListener('submit', onSearch  );
+refs.searchForm.addEventListener('submit', (e) => {e.preventDefault(); fetchQMovies(refs.searchInput.value)}  );
 
 // ======Бесконечный скролл======
 

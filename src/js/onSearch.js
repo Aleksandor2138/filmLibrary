@@ -4,6 +4,7 @@ import axios from 'axios';
 import getRefs from './get-refs';
 import renderMarkupImageInfo from '../js/renderSearchGallary';
 import { createMarkupElement } from './renderMarkup';
+import { makeSkeletonLoader } from './skeleton-loader';
 
 
 const refs = getRefs();
@@ -58,7 +59,7 @@ export default  async function  onSearch (e) {
           'afterbegin',
           URL.data.results.map(createMarkupElement).join('')
         );
-        // page += 1;
+        makeSkeletonLoader();
     } catch (error) {
         console.log(error);
       }

@@ -1,47 +1,71 @@
-import axios from 'axios';
+import MoviesApi from './moviesApi';
+import getRefs from './get-refs';
 import renderMovieDetails from './movie-details-render';
-import playTrailer from './movie-play-trailer';
+import watchTrailer from './movie-play-trailer';
 import addToWatchOrQueue from './add-to-watch-queue'; // FT-18, FT-19 (Функціонал для кнопок "Додати до переглянутих", "Додати до черги")
 
-export default async function openMovieDetails(movieId) {
-  const backdrop = document.querySelector('.backdrop');
-  backdrop.classList.remove('is-hidden');
-  const modalContent = document.querySelector('.modal-content');
+const moviesApi = new MoviesApi();
+const { movieBackdrop, movieModalContent } = getRefs();
 
-  const movieDetails = await axios.get(
-    `https://api.themoviedb.org/3/movie/${movieId}?api_key=babda8599831afaa2c30cb95eedbc1fe&language=en`
+export default function openMovieDetails(movieId) {
+  movieBackdrop.classList.remove('is-hidden');
+  movieBackdrop.insertAdjacentHTML(
+    'beforeend',
+    `<div class="lds-ring"><div></div><div></div><div></div><div></div>`
   );
-  renderMovieDetails(movieDetails);
-  addToWatchOrQueue(movieDetails); // FT-18, FT-19 (Функціонал для кнопок "Додати до переглянутих", "Додати до черги")
-  // console.log(movieDetails.data);
-  document.getElementById('first-btn').focus();
-  playTrailer(movieId);
+  const spinner = document.querySelector('.lds-ring');
+
+  let trailer;
+  const playTrailerBtnMarkup = `<button class="button-modal play-trailer" type="button">Watch trailer</button>`;
+
+  moviesApi.fetchMovieByID(movieId).then(movieDetails => {
+    // movieModalContent.innerHTML = '';
+    spinner.remove();
+    renderMovieDetails(movieDetails);
+    const closeMovieModalBtn = document.querySelector('.modal-close-btn');
+    closeMovieModalBtn.addEventListener('click', onCloseBtnClick);
+    function onCloseBtnClick() {
+      movieBackdrop.classList.add('is-hidden');
+      movieModalContent.innerHTML = '';
+    }
+    addToWatchOrQueue(movieDetails); // FT-18, FT-19 (Функціонал для кнопок "Додати до переглянутих", "Додати до черги")
+
+    if (movieDetails.resultVideo.length !== 0) {
+      trailer = movieDetails.resultVideo.find(
+        video => video.type === 'Trailer'
+      );
+      const movieModalButtons = document.querySelector('.movie-modal-buttons');
+      movieModalButtons.insertAdjacentHTML('beforeend', playTrailerBtnMarkup);
+
+      const watchTrailerBtn = document.querySelector('.play-trailer');
+      watchTrailerBtn.addEventListener('click', onWatchTrailerClick);
+      function onWatchTrailerClick() {
+        watchTrailer(trailer.key);
+      }
+    }
+  });
 
   // ----------------------------------------- CLOSE MODAL ---------------------------------------------
 
-  const closeBtn = document.querySelector('.btn-close');
-  closeBtn.addEventListener('click', onCloseBtnClick);
-  function onCloseBtnClick() {
-    // document.getElementById('first-btn').blur();
-    backdrop.classList.add('is-hidden');
-    modalContent.innerHTML = '';
-  }
+  // function clearMovieModal() {
+  //   movieModalContent.innerHTML = '';
+  // }
 
-  backdrop.addEventListener('click', onBackdropClick);
+  movieBackdrop.addEventListener('click', onBackdropClick);
   function onBackdropClick(e) {
-    if (e.target === backdrop) {
-      // document.getElementById('first-btn').blur();
-      backdrop.classList.add('is-hidden');
-      modalContent.innerHTML = '';
+    if (e.target === movieBackdrop) {
+      movieBackdrop.classList.add('is-hidden');
+      movieModalContent.innerHTML = '';
+      // setTimeout(() => clearMovieModal(), 500);
     }
   }
 
   document.addEventListener('keydown', onEscPress);
   function onEscPress(event) {
     if (event.code === 'Escape') {
-      document.getElementById('first-btn').blur();
-      backdrop.classList.add('is-hidden');
-      modalContent.innerHTML = '';
+      movieBackdrop.classList.add('is-hidden');
+      movieModalContent.innerHTML = '';
+      // setTimeout(() => clearMovieModal(), 500);
       document.removeEventListener('keydown', onEscPress);
     }
   }

@@ -3,10 +3,27 @@ export default function getRefs() {
     searchForm: document.querySelector('#search-form'),
     searchInput: document.querySelector('.search-input'),
     searchBtn: document.querySelector('.search-button'),
-    imagesContainer: document.querySelector('.galary-list'),
-    addWatchBtn: document.querySelector('.add-watch-js'), // FT-18, FT-19 Start || file -> add-to-watch-queue.js
+    imagesContainer: document.querySelector('.gallery__list'),
+    paginationList: document.querySelector('.pagination'),
+
+    checkBoxEl: document.querySelector('[name="ligthswitcher"]'),
+    bodyEl: document.querySelector('body'),
+
+    addWatchBtn: document.querySelector('.add-watch-js'),
     removeWatchBtn: document.querySelector('.remove-watch-js'),
     addQueueBtn: document.querySelector('.add-queue-js'),
-    removeQueueBtn: document.querySelector('.remove-queue-js'), // FT-18, FT-19 End
+    removeQueueBtn: document.querySelector('.remove-queue-js'),
+
+    movieBackdrop: document.querySelector('.movie-modal-backdrop'),
+    movieModalContent: document.querySelector('.movie-modal-content'),
+
+    playerContainer: document.querySelector('.player'),
+    playerBackdrop: document.querySelector('.player-backdrop'),
+    playerCloseBtn: document.querySelector('.btn-player-close'),
+    
+    filterClear: document.querySelector('.filter__clear'),
+    filterGenreList: document.querySelector('.filter__genre-list'),
+    filterContainer: document.querySelector('.filter__container'),
+    filterSelectBtn: document.querySelector('.filter__select-btn'),
   };
 }

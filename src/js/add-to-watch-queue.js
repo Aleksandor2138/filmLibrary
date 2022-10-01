@@ -2,10 +2,18 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import getRefs from './get-refs';
 
 export default function addToWatchOrQueue(movieDetails) {
-  const { data } = movieDetails;
-  const { id, title, poster_path, genres, release_date, vote_average } = data;
+  // const { data } = movieDetails;
+  // переписав запити через moviesApi, тепер це присвоєння не потрібне
+  const { id, title, poster_path, genres, release_date, vote_average } =
+    movieDetails;
   const { addWatchBtn, removeWatchBtn, addQueueBtn, removeQueueBtn } =
     getRefs();
+
+  const genreNames = [];
+
+  for (const genre of genres) {
+    genreNames.push(genre.name);
+  }
 
   let watched = localStorage.getItem('Watched');
   let queue = localStorage.getItem('Queue');
@@ -14,7 +22,7 @@ export default function addToWatchOrQueue(movieDetails) {
     id,
     title,
     poster_path,
-    genres,
+    genreNames,
     release_date,
     vote_average,
   };

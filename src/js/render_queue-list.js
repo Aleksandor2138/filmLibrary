@@ -1,5 +1,5 @@
 import { createMarkupElement } from './renderMarkup';
-import { makeSkeletonLoader } from './skeleton-loader';
+import { spinnerOn } from './loader';
 import getRefs from './get-refs';
 
 const { galleryList, queuedBtn } = getRefs();
@@ -23,6 +23,6 @@ export default function renderQueue() {
     });
 
     galleryList.insertAdjacentHTML('beforeend', watchedMarkup);
-    makeSkeletonLoader();
+    spinnerOn();
   }
 }

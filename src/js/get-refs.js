@@ -29,5 +29,7 @@ export default function getRefs() {
     galleryList: document.querySelector('.gallery__list--library'),
     watchedBtn: document.querySelector('.watched-btn'),
     queuedBtn: document.querySelector('.queue-btn'),
+
+    backdropSpinnerRef: document.querySelector('.backdrop-spinner'),
   };
 }

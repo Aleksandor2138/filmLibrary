@@ -4,6 +4,7 @@ import getRefs from './js/get-refs.js';
 import renderWatched from './js/render-watched-movie.js';
 import renderQueue from './js/render_queue-list.js';
 import openMovieDetails from './js/movie-details-open.js';
+import './js/loader'
 
 const { watchedBtn, queuedBtn, galleryList } = getRefs();
 

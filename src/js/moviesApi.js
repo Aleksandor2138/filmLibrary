@@ -165,6 +165,14 @@ class MoviesApi {
     this.#currentPage += 1;
   }
 
+  decrementByThree() {
+    this.#currentPage -= 3;
+  }
+
+  incrementByThree() {
+    this.#currentPage += Number(3);
+}
+
   previousPage() {
     if (!(this.#currentPage - 1)) {
       return;

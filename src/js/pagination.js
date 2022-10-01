@@ -2,11 +2,10 @@ import MoviesApi from './moviesApi';
 import getRefs from './get-refs';
 import { createMarkupElement } from './renderMarkup';
 import { showMovies } from './filter';
-import { makeSkeletonLoader } from './skeleton-loader';
+import { spinnerOn } from './loader';
 
 const refs = getRefs();
 const moviesApi = new MoviesApi();
-
 
 document.addEventListener('DOMContentLoaded', () => {
   fetchTrendMovies(1);
@@ -46,7 +45,7 @@ export function renderPagination(page, totalPage) {
     paginationMarkup += `<li class="pagination__number display-none">1</li>`;
   }
   if (page > 4) {
-    paginationMarkup += `<li class="pagination__number display-none">...</li>`;
+    paginationMarkup += `<li class="pagination__number pagination__number--prev display-none">...</li>`;
   }
 
   if (page > 3) {
@@ -66,7 +65,7 @@ export function renderPagination(page, totalPage) {
   }
   if (page <= totalPage - 1) {
     if (page < totalPage - 3) {
-      paginationMarkup += `<li class="pagination__number display-none">...</li>`;
+      paginationMarkup += `<li class="pagination__number pagination__number--next display-none">...</li>`;
     }
     paginationMarkup += `<li class="pagination__number display-none">${totalPage}</li>`;
   }
@@ -83,25 +82,31 @@ export function renderPagination(page, totalPage) {
 export function onPagination(e) {
   if (e.target.nodeName !== `LI`) {
     return;
-  }
-  const target = e.target.textContent;
-  
+    }
+
+checkingEventPaginationsValues(e.target.textContent, e.target.classList.contains("pagination__number--prev"))
   window.scrollTo({ top: 240, behavior: 'smooth' });
-  switch (target) {
-    case '←':
-      moviesApi.previousPage()
-      break;
-    case '→':
-      moviesApi.nextPage()
-      break;
-
-    case '...':
-      break;
-
-    default:
-      moviesApi.eventPage(target) 
-  }
+  
+console.log(moviesApi.currentpage)
 fetchTrendMovies()
+}
+
+function checkingEventPaginationsValues(evt, boolean) {
+    const target = evt;
+    const decrementByThreeClass = boolean;
+
+    if (Number(target)) {
+      return  moviesApi.eventPage(target)
+    }
+  
+    if (target === '...') {
+     return  decrementByThreeClass ? moviesApi.decrementByThree() : moviesApi.incrementByThree();
+
+    }
+
+    if (target === '→' || target === '←') {
+      return  target === '→' ? moviesApi.nextPage() : moviesApi.previousPage();
+    }
 }
 
 export function renderPaginationbyGenre(page, totalPage) {
@@ -119,7 +124,7 @@ export function renderPaginationbyGenre(page, totalPage) {
     paginationMarkup += `<li class="pagination__number display-none">1</li>`;
   }
   if (page > 4) {
-    paginationMarkup += `<li class="pagination__number display-none">...</li>`;
+    paginationMarkup += `<li class="pagination__number pagination__number--prev display-none">...</li>`;
   }
 
   if (page > 3) {
@@ -139,7 +144,7 @@ export function renderPaginationbyGenre(page, totalPage) {
   }
   if (page <= totalPage - 1) {
     if (page < totalPage - 3) {
-      paginationMarkup += `<li class="pagination__number display-none">...</li>`;
+      paginationMarkup += `<li class="pagination__number pagination__number--next display-none">...</li>`;
     }
     paginationMarkup += `<li class="pagination__number display-none">${totalPage}</li>`;
   }
@@ -156,22 +161,9 @@ export function onPaginationbyGenre(e) {
   if (e.target.nodeName !== `LI`) {
     return;
   }
-  const target = e.target.textContent;
 
+  checkingEventPaginationsValues(e.target.textContent, e.target.classList.contains("pagination__number--prev"))
   window.scrollTo({ top: 240, behavior: 'smooth' });
-  switch (target) {
-    case '←':
-      moviesApi.previousPage();
-      break;
-    case '→':
-      moviesApi.nextPage();
-      break;
-
-    case '...':
-      break;
-
-    default:
-      moviesApi.eventPage(target);
-  }
+  
   showMovies();
 }

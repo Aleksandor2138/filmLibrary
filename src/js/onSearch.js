@@ -2,7 +2,7 @@
 import axios from 'axios';
 import getRefs from './get-refs';
 import { createMarkupElement } from './renderMarkup';
-import { makeSkeletonLoader } from './skeleton-loader';
+import { spinnerOn } from './loader';
 import MoviesApi from '../js/moviesApi';
 import createPagination from '../js/pagination';
 
@@ -30,16 +30,6 @@ async function fetchQMovies(q) {
         results.map(createMarkupElement).join('')
       );
 
-    //  // pagination
-    const instance = createPagination();
-    instance.setItemsPerPage(20);
-    instance.setTotalItems(total_results);
-    instance.movePageTo(page);
-
-    instance.on('afterMove', event => {
-      const currentPage = event.page;
-      window.scrollTo({ top: 240, behavior: 'smooth' });
-    });
 
     results.length &&
       refs.imagesContainer.insertAdjacentHTML(
@@ -47,8 +37,8 @@ async function fetchQMovies(q) {
         results.map(createMarkupElement).join('')
       );
 
-    // Skeleton
-    makeSkeletonLoader();
+    
+    spinnerOn();
   } catch (error) {
     console.log(error);
   }

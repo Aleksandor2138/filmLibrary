@@ -4,6 +4,7 @@ import { fetchTrendMovies } from './pagination';
 import MoviesApi from './moviesApi';
 import getRefs from './get-refs';
 import { renderPaginationbyGenre } from './pagination';
+import { spinnerOn } from './loader';
 
 const moviesApi = new MoviesApi();
 const refs = getRefs();
@@ -76,6 +77,7 @@ export async function showMovies() {
         'afterbegin',
         results.map(createMarkupElement).join('')
       );
+    spinnerOn()
     renderPaginationbyGenre(page, total_pages);
   } catch (error) {
     console.log(error);

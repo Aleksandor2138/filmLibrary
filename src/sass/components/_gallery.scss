@@ -28,10 +28,10 @@
       cursor: pointer;
     }
     body.night & {
-        border: 1px solid #ff6b0177;
+        border: 1px solid var(--accent-color-night);
       &:hover,
       &:focus {
-        box-shadow: 0px 0px 4px 4px #ff6b0142;
+        box-shadow: 0px 0px 4px 4px var(--accent-color-night);
       }
     }
   }

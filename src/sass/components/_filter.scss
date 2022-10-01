@@ -8,9 +8,10 @@ body.night {
   }
   & .filter__clear:hover,
   & .filter__clear:focus {
-    fill: #ff6b01;
+    fill: var(--accent-color);
   }
 }
+
 .section-filter {
   @extend .section;
 

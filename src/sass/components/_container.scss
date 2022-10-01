@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .container,
 .container-dev {
   margin: 0 auto;
@@ -33,9 +34,19 @@
     padding-top: 0;
     padding-bottom: 0;
   }
+=======
+.container {
+  margin: 0 auto;
+  display: block;
+  max-width: 480px;
+  padding: 0 20px;
+}
+>>>>>>> main
 
+@include tablet {
   .container {
     max-width: 768px;
+<<<<<<< HEAD
     // outline: 2px solid tomato;
 
   }
@@ -45,14 +56,15 @@
     width: 549px;
     // outline: 2px solid tomato;
   }
-
-
+=======
+    padding: 0 30px;
+  }
 }
+>>>>>>> main
 
-// 1200+
-
-@media screen and (min-width: 1280px) {
+@include desktop {
   .container {
+<<<<<<< HEAD
     padding: 0 18;
     max-width: 1260px;
     // outline: 2px solid tomato;
@@ -86,5 +98,8 @@
     display: flex;
     width: 833px;
     // outline: 2px solid tomato;
+=======
+    max-width: 1280px;
+>>>>>>> main
   }
 }

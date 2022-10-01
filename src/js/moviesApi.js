@@ -5,10 +5,27 @@ const API_KEY = 'bb9be7856d820d280efdc8865f07d5b2';
 axios.defaults.baseURL = API_URL;
 
 function handlerGenres ({results, ...other}, genres) {
-  for (const object of results) {
+  for (let object of results) {
     object.genre_str = object.genre_ids.map(elem => genres.find(genre =>  genre.id === elem).name);
   }
   return ({...other, results})
+}
+
+function getQueryGendres(queryGendres) {
+  console.log(queryGendres);
+  if (Array.isArray(queryGendres)) {
+    return queryGendres.join(",");
+  }
+  else if (typeof(queryGendres) === 'string') {
+    return queryGendres;
+  }
+  else if (typeof(queryGendres) === 'number') {
+    console.log(queryGendres);
+    return queryGendres.toString();
+  }
+  else{
+    return ""
+  }
 }
 
 class MoviesApi{
@@ -85,7 +102,24 @@ class MoviesApi{
     return response.data;
   }
 
-  async fetchMovieQuery () {
+  async fetchMovieByGenres(arrayGenres) {
+    const queryGendres = getQueryGendres(arrayGenres);
+    if (!queryGendres){
+     return {results: []};
+    } 
+    const response = await axios.get('/discover/movie', {
+      params: {
+        api_key: API_KEY,
+        language: "en",
+        with_genres: queryGendres,
+        page: this.#currentPage,
+      },
+    });
+
+    return handlerGenres(response.data, MoviesApi.genres);
+  }
+
+  async fetchMovieQuery() {
     const response = await axios.get(`/search/movie/`, {
       params: {
         api_key: API_KEY,
@@ -106,6 +140,10 @@ class MoviesApi{
     this.#currentPage = 1;
   }
 
+  eventPage(newPage) {
+    this.#currentPage = newPage;
+  }
+
   nextPage() {
     this.#currentPage += 1;
   }
@@ -114,7 +152,7 @@ class MoviesApi{
     if (!(this.#currentPage - 1)){
       return
     }
-    
+
     this.#currentPage -= 1;
   }
 

@@ -2,19 +2,21 @@
 // import axios from 'axios';
 import getRefs from './js/get-refs';
 // import renderMarkupImageInfo from './renderMarkup';
-import createPagination from './js/pagination';
 import openMovieDetails from './js/movie-details-open';
 import footerModal from './js/footer-modal-open';
-
 import { createMarkupElement } from './js/renderMarkup';
 import MoviesApi from './js/moviesApi';
 import './js/nightMode';
 import './js/top.js';
-import { makeSkeletonLoader } from './js/skeleton-loader';
+import './js/filter';
+
+import renderPagination from './js/pagination'
+
 
 // import userAuth from './js/auth'
 import authListnener from './js/auth';
 const refs = getRefs();
+
 
 const moviesApi = new MoviesApi();
 
@@ -23,10 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ------------ OPEN MOVIE MODAL --------------------
-const movieGallery = document.querySelector('.galary-list');
+
+const movieGallery = document.querySelector('.gallery__list');
 movieGallery.addEventListener('click', onMovieCardClick);
 function onMovieCardClick(e) {
-  if (e.target.classList.contains('galary-list-item-img')) {
+  if (e.target.classList.contains('gallery__img')) {
     e.preventDefault();
     const movieId = e.target.dataset.movieId;
     openMovieDetails(movieId);

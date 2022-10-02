@@ -1,6 +1,7 @@
 
 import axios from 'axios';
 import getRefs from './get-refs';
+
 import { createMarkupElement } from './renderMarkup';
 import { spinnerOn } from './loader';
 import MoviesApi from '../js/moviesApi';

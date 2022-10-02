@@ -7,16 +7,18 @@ import footerModal from './js/footer-modal-open';
 import { createMarkupElement } from './js/renderMarkup';
 import MoviesApi from './js/moviesApi';
 import './js/nightMode';
-import './js/top.js';
+import topUp from './js/top.js';
 import './js/filter';
 
 import { spinnerOn } from './js/loader';
 import onSearch  from './js/onSearch';
 
+
 import renderPagination from './js/pagination';
 
-// import userAuth from './js/auth'
-// import authListnener from './js/auth';
+import userAuth from './js/auth'
+
+
 const refs = getRefs();
 
 const moviesApi = new MoviesApi();
@@ -27,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ------------ OPEN MOVIE MODAL --------------------
 
-// const movieGallery = document.querySelector('.galary-list');
 refs.imagesContainer.addEventListener('click', onMovieCardClick);
 function onMovieCardClick(e) {
   if (e.target.classList.contains('gallery__img')) {
@@ -57,5 +58,5 @@ async function fetchTrendMovies() {
   }
 }
 
-
-refs.searchForm.addEventListener('submit', onSearch );
+refs.searchForm.addEventListener('submit', onSearch);
+topUp();

@@ -18,8 +18,7 @@ const refs = getRefs();
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  moviesApi.currentFetch = moviesApi.fetchTrendWeekMovies;
-  
+  moviesApi.currentFetch = moviesApi.fetchTrendWeekMovies;  
   customPagination.moveToPage(moviesApi.currentPage);
 });
 

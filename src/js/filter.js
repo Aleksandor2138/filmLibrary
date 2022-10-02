@@ -42,10 +42,9 @@ async function setGenre() {
         }
       }
       
-      moviesApi.currentPage = 1;
       moviesApi.genres = selectedGenre;
       moviesApi.currentFetch = moviesApi.fetchMovieByGenres;  
-      customPagination.moveToPage(moviesApi.currentPage)
+      customPagination.moveToPage(1)
 
       highlightSelection();
       updateFilterSelectBtn();
@@ -71,7 +70,8 @@ function highlightSelection() {
     });
   } else {
     refs.filterClear.classList.add('filter--hidden');
-    fetchTrendMovies();
+    moviesApi.currentFetch = moviesApi.fetchTrendWeekMovies;
+    customPagination.moveToPage(1)
   }
 }
 

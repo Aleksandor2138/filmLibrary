@@ -11,7 +11,7 @@ class Pagination {
       this.stepInterval= stepInterval || countPoint;
       this.#totalPages = totalPages;
 
-      this.mobileVersion = true;
+      this.mobileVersion = false;
 
       this.onShow = onShow;
       
@@ -58,19 +58,19 @@ class Pagination {
     }
 
     nextPage() {
-      if (this.currentPage +1 < this.#totalPages) {
+      if (this.currentPage +1 <= this.#totalPages) {
         this.moveToPage(this.currentPage +1) 
       }
     }
 
     nextInterval() {
-      if (this.currentPage + this.countPoint < this.#totalPages) {
+      if (this.currentPage + this.countPoint <= this.#totalPages) {
         this.moveToPage(this.currentPage + this.countPoint)
       }
     }
 
     previosPage() {
-      if ((this.#currentPage - 1)){
+      if (this.#currentPage - 1){
         this.moveToPage(this.currentPage - 1)
       }      
     }
@@ -115,15 +115,13 @@ function renderPagination(parent, page, totalPage, countPoint, mobileVersion) {
     const isOffset = totalPage > countPoint;
     const rr = Math.ceil(countPoint /2);
     
-    console.log(mobileVersion); 
-
     let offset = mobileVersion ? 0 : 1; 
     if( page > totalPage - countPoint ){
       offset = totalPage - countPoint}
     else if (page > (mobileVersion ? rr : countPoint) && page < (totalPage - rr)){
       offset = page - rr;
     } 
-    console.log(countPoint);  
+
     let lCountPoint = countPoint; 
     if (totalPage < countPoint) {
       lCountPoint = totalPage -(1 * mobileVersion ? 0 : 1);
@@ -137,7 +135,7 @@ function renderPagination(parent, page, totalPage, countPoint, mobileVersion) {
         lCountPoint = countPoint - (1* mobileVersion ? 0 : 1);
       }
     }
-    console.log("lCountPoint",lCountPoint);
+    
     const markup = Array.from(
       { length: lCountPoint },
       (v, k) => k + (1 + offset)

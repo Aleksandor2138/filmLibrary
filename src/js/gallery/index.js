@@ -11,6 +11,20 @@ import { createMarkupElementGallery } from "./renderMarkup";
 
 const refs = getRefs();
 
+window.matchMedia("(max-width: 768px)").addEventListener("change", (w) => {
+
+  console.log("matches", w.matches);
+  customPagination.mobileVersion = w.matches;
+  customPagination.moveToPage(customPagination.currentPage);
+
+  if (w.matches) { // If media query matches
+  
+  document.body.style.backgroundColor = "yellow";
+} else {
+  document.body.style.backgroundColor = "pink";
+}}
+)
+
 function renderMovies({ results, total_results, total_pages, page }){
 
   refs.imagesContainer.innerHTML = "";  
@@ -45,7 +59,7 @@ const moviesApi = new MoviesApi(renderMovies);
   
 const customPagination = new CustomPagination(refs.paginationList,{
     countPoint : 5,
-    maxCountPages : 10,
+    totalPages : 10,
     onShow: (currentPage) => {
       moviesApi.currentPage = currentPage;
       window.scrollTo({ top: 240, behavior: 'smooth' });

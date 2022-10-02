@@ -1,4 +1,3 @@
-
 class Pagination {
     #currentPage
     #totalPages
@@ -12,10 +11,12 @@ class Pagination {
       this.stepInterval= stepInterval || countPoint;
       this.#totalPages = totalPages;
 
+      this.mobileVersion = true;
+
       this.onShow = onShow;
       
     //   createMarkUp(parent);
-      renderPagination(parent, this.currentPage , this.#totalPages, this.countPoint)
+      renderPagination(parent, this.currentPage , this.#totalPages, this.countPoint, this.mobileVersion)
       parent.addEventListener('click', this._handlerOnClick.bind(this))
     }
 
@@ -53,7 +54,7 @@ class Pagination {
 
     setTotalPages(totalPages){
         this.#totalPages = totalPages;
-        renderPagination(this.parent, this.currentPage, this.#totalPages, this.countPoint)
+        renderPagination(this.parent, this.currentPage, this.#totalPages, this.countPoint, this.mobileVersion)
     }
 
     nextPage() {
@@ -108,33 +109,35 @@ class Pagination {
 //      </ul>`);
 // }
 
-function renderPagination(parent, page, totalPage, countPoint) {
+function renderPagination(parent, page, totalPage, countPoint, mobileVersion) {
     
     let paginationMarkup = '';
     const isOffset = totalPage > countPoint;
     const rr = Math.ceil(countPoint /2);
     
-    let offset = 1; 
+    console.log(mobileVersion); 
+
+    let offset = mobileVersion ? 0 : 1; 
     if( page > totalPage - countPoint ){
       offset = totalPage - countPoint}
-    else if (page > countPoint && page < (totalPage - rr)){
+    else if (page > (mobileVersion ? rr : countPoint) && page < (totalPage - rr)){
       offset = page - rr;
     } 
-        
+    console.log(countPoint);  
     let lCountPoint = countPoint; 
     if (totalPage < countPoint) {
-      lCountPoint = totalPage -1;
+      lCountPoint = totalPage -(1 * mobileVersion ? 0 : 1);
     }
     else{
       if (page <= countPoint ){
-        lCountPoint = countPoint - 1;
+        lCountPoint = countPoint - (1 * mobileVersion ? 0 : 1);
       }
       
       else if (page > totalPage - countPoint) {
-        lCountPoint = countPoint - 1
+        lCountPoint = countPoint - (1* mobileVersion ? 0 : 1);
       }
     }
-
+    console.log("lCountPoint",lCountPoint);
     const markup = Array.from(
       { length: lCountPoint },
       (v, k) => k + (1 + offset)
@@ -145,11 +148,11 @@ function renderPagination(parent, page, totalPage, countPoint) {
       ).join('');
       
     paginationMarkup = `<a class="pagination__arrow pagination__arrow--left materials-icons" data-action="previosPage">&larr;</a>
-                        <a class="pagination__number ${page === 1 ? "active" : page <= countPoint ? "" : "display-none"}" data-index = ${1}">1</a>
-                        ${(isOffset && page > countPoint) ? '<a class="pagination__number display-none" data-action="previosInterval">...</a>': ""}
+                        ${!mobileVersion ?  `<a class="pagination__number ${page === 1 ? "active" : page <= countPoint ? "" : "display-none"}" data-index = ${1}">1</a>` : ""}
+                        ${!mobileVersion && (isOffset && page > countPoint) ? '<a class="pagination__number display-none" data-action="previosInterval">...</a>': ""}
                         ${markup}
-                        ${(isOffset && page < (totalPage - countPoint + 1)) ? `<a class="pagination__number display-none" data-action="nextInterval">...</a>` : ""}
-                        ${(isOffset && totalPage > countPoint) ? `<a class="pagination__number ${page === totalPage ? "active" : page > totalPage - countPoint ? "" : "display-none"}" data-index = ${totalPage}">${totalPage}</a>`: ""}
+                        ${!mobileVersion && (isOffset && page < (totalPage - countPoint + 1)) ? `<a class="pagination__number display-none" data-action="nextInterval">...</a>` : ""}
+                        ${!mobileVersion && (isOffset && totalPage > countPoint) ? `<a class="pagination__number ${page === totalPage ? "active" : page > totalPage - countPoint ? "" : "display-none"}" data-index = ${totalPage}">${totalPage}</a>`: ""}
                         <a class="pagination__arrow pagination__arrow--right materials-icons" data-action="nextPage">&rarr;</a>`
       
     parent.innerHTML = paginationMarkup;

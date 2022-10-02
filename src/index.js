@@ -16,10 +16,24 @@ import onSearch from './js/onSearch';
 
 const refs = getRefs();
 
+// function myFunction(x) {
+//   if (x.matches) { // If media query matches
+//     document.body.style.backgroundColor = "yellow";
+//   } else {
+//     document.body.style.backgroundColor = "pink";
+//   }
+// }
+
+// let x = window.matchMedia("(max-width: 768px)")
+// myFunction(x) // Call listener function at run time
+// x.addEventListener("change", myFunction) 
+
 document.addEventListener('DOMContentLoaded', () => {
   moviesApi.currentFetch = moviesApi.fetchTrendWeekMovies;
   customPagination.moveToPage(moviesApi.currentPage);
 });
+
+
 
 // ------------ OPEN MOVIE MODAL --------------------
 

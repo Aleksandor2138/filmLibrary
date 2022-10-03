@@ -111,8 +111,8 @@ function onFilterClearBtn() {
   // refs.filterWrap.classList.remove('filter--active');
   refs.filterSelectBtn.innerHTML = 'Select genre';
   
-  moviesApi.currentpage = 1;
-  moviesApi.currentFetch = moviesApi.fetchTrendWeekMovies;
+  moviesApi.currentFetch = moviesApi.fetchTrendWeekMovies
+  customPagination.moveToPage(1);
 }
 
 // custom select

@@ -48,7 +48,7 @@ function renderMovies({ results, total_results, total_pages, page }){
   makeSkeletonLoader();
 }
 const moviesApi = new MoviesApi(renderMovies);
-  
+
 const customPagination = new CustomPagination(refs.paginationList,{
     countPoint : 5,
     totalPages : 10,

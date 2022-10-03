@@ -28,6 +28,10 @@ function getQueryGendres(queryGendres) {
   }
 }
 
+function getArrayAllGenders(genres){
+  return genres;
+}
+
 class MoviesApi{
 
   static allGenres = null;
@@ -37,7 +41,7 @@ class MoviesApi{
           api_key: API_KEY,
         },
       });
-      this.allGenres = response.data.genres;
+      this.allGenres = getArrayAllGenders(response.data.genres);
     }
   
   #searchParams;
@@ -49,9 +53,18 @@ class MoviesApi{
       this.currentFetch = null;
       this.onShow = onShow;      
       
-      this.constructor.fetchAllGendresMovie();
+      this.constructor.fetchAllGendresMovie().then(() => {console.log(111);});
   }
 
+  async getAllGenres(){
+    return getArrayAllGenders(MoviesApi.allGenres);
+    // const response = await axios.get("/genre/movie/list", {
+    //   params: {
+    //     api_key: API_KEY,
+    //   },
+    // });
+    // return response.data.genres;
+  }
   async fetchTrendWeekMovies() {
     const response = await axios.get(`/trending/movie/week`, {
       params: {
@@ -169,16 +182,6 @@ class MoviesApi{
 
   set currentPage(newPage) {
     this.#currentPage = newPage;
-  }
-  
-  async getAllGenres(){    
-    // return this.constructor.allGenres;
-    const response = await axios.get("/genre/movie/list", {
-      params: {
-        api_key: API_KEY,
-      },
-    });
-    return response.data.genres;
   }
 }
 

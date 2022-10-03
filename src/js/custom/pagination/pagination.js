@@ -1,5 +1,5 @@
 class Pagination {
-  s
+  
     #currentPage
     #totalPages
 
@@ -12,7 +12,7 @@ class Pagination {
       this.stepInterval= stepInterval || countPoint;
       this.#totalPages = totalPages;
 
-      this.useInterval = false;
+      this.useInterval = true;
 
       this.onShow = onShow;
       this.render = render || renderPagination;

@@ -19,6 +19,8 @@ async function setGenre() {
   try {
     const genre  = await moviesApi.getAllGenres();
 
+    console.log(genre);
+
     genre.forEach(genre => {
     const elem = document.createElement('li');
     elem.classList.add('filter__genre-item');

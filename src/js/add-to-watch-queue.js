@@ -1,7 +1,8 @@
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import getRefs from './get-refs';
-import renderWatched from './render-watched-list';
-import renderQueue from './render_queue-list';
+import { customPagination } from './library';
+// import renderWatched from './render-watched-list';
+// import renderQueue from './render_queue-list';
 
 export default function addToWatchOrQueue(movieDetails) {
   const { id, title, poster_path, genres, release_date, vote_average } =
@@ -106,13 +107,14 @@ export default function addToWatchOrQueue(movieDetails) {
     Notify.success(`The movie "${title}" has been added to watched`, options);
 
     // FT-14 (Рендер бібліотеки після додавання фільму в переглянуті)
-    try {
-      if (queuedBtn.classList.contains('selected')) {
-        renderQueue();
-      } else {
-        renderWatched();
-      }
-    } catch (e) {}
+    // try {
+    //   if (queuedBtn.classList.contains('selected')) {
+    //     renderQueue();
+    //   } else {
+    //     renderWatched();
+    //   }
+    // } catch (e) {}
+    customPagination.moveToPage(customPagination.currentPage);
   }
   // Додавання поточного фільму до LocalStorage
   // та перевірка його наявності в значенні ключа Watched
@@ -137,13 +139,14 @@ export default function addToWatchOrQueue(movieDetails) {
     Notify.success(`The movie "${title}" has been added to the queue`, options);
 
     // FT-15 (Рендер бібліотеки після додавання фільму в чергу)
-    try {
-      if (watchedBtn.classList.contains('selected')) {
-        renderWatched();
-      } else {
-        renderQueue();
-      }
-    } catch (e) {}
+    // try {
+    //   if (watchedBtn.classList.contains('selected')) {
+    //     renderWatched();
+    //   } else {
+    //     renderQueue();
+    //   }
+    // } catch (e) {}
+    customPagination.moveToPage(customPagination.currentPage);
   }
   // Видалення об'єкта фільму ключа Watched з LocalStorage за індексом
   function removeFilmFromWatched() {
@@ -162,7 +165,8 @@ export default function addToWatchOrQueue(movieDetails) {
 
     Notify.info(`The film "${title}" has been removed from watched`, options);
 
-    renderWatched(); // FT-14 (Рендер бібліотеки після видалення фільму з переглянутих)
+    // renderWatched(); // FT-14 (Рендер бібліотеки після видалення фільму з переглянутих)
+    customPagination.moveToPage(customPagination.currentPage);
   }
   // Видалення об'єкта фільму ключа Queue з LocalStorage за індексом
   function removeFilmFromQueue() {
@@ -181,7 +185,8 @@ export default function addToWatchOrQueue(movieDetails) {
 
     Notify.info(`The film "${title}" been removed from the queue`, options);
 
-    renderQueue(); // FT-15 (Рендер бібліотеки після видалення фільму з черги)
+    // renderQueue(); // FT-15 (Рендер бібліотеки після видалення фільму з черги)
+    customPagination.moveToPage(customPagination.currentPage);
   }
 
   addWatchBtn.addEventListener('click', addFilmToWatched);

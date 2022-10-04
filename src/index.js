@@ -24,9 +24,9 @@ async function onMovieCardClick(e) {
     e.preventDefault();
     const movieId = e.target.dataset.movieId;
     await openMovieDetails(moviesApi.fetchMovieByID(movieId));
-    const authButtons = document.querySelectorAll('.auth-required')
+    // const authButtons = document.querySelectorAll('.auth-required')
    
-    checkAuth(authButtons)
+    // checkAuth(authButtons)
   }
 }
 // ---------- OPEN MOVIE MODAL END -------------------
